@@ -10,7 +10,7 @@ Instead of handing in their homework like normal, students can opt to hand in a 
 The numbering of the exercises refers to the [lecture notes](https://www.win.tue.nl/~jwporteg/Analysis-Notes.pdf) written by the lecturer, Jim Portegies.
 
 
-## Tutorial and overviews.
+## Tutorial and overview
 
 This repository also contains the Waterproof tutorial, `Tutorial.wpe`, which comes bundled with the Wateproof editor itself.
 The tutorial is rather extensive, so we also include here two smaller notebooks that summarize its contents:
