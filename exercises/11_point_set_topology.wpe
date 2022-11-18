@@ -1,0 +1,77 @@
+{
+  "exerciseSheet": true,
+  "blocks": [
+    {
+      "type": "text",
+      "text": "* Point-set topology\n\nThis file contains some blue exercises from the chapter \"Point-set topology\".\nTo run this file we have to import some libraries.\nYou can ignore these."
+    },
+    {
+      "type": "code",
+      "text": "Set Default Goal Selector \"!\".\nSet Default Timeout 5.\n\nRequire Import Reals.\nRequire Import Classical_Prop.\nRequire Import Waterproof.AllTactics.\nRequire Import Waterproof.notations.notations.\nRequire Import Waterproof.load_database.RealsAndIntegers.\nRequire Import Waterproof.set_search_depth.To_5.\nRequire Import Waterproof.theory.analysis.open_and_closed.\n\nOpen Scope R_scope.\nOpen Scope subset_scope.\n"
+    },
+    {
+      "type": "text",
+      "text": "## **Exercise 11.6.2.**\n***Exercise:*** *Show that the interval $[0,1)$ is neither open nor closed*\n\n*(seen as a subset of the normed linear space $(\\mathbb{R}, | \\cdot |)$).*"
+    },
+    {
+      "type": "text",
+      "text": "\n**Step 1:** show that the interval $[0,1)$ is not open."
+    },
+    {
+      "type": "code",
+      "text": "\nLemma not_open : ¬ ([0,1) is _open_).\nProof."
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nIf you need to show that\n\n$~~~~$`¬ (∀ a : ℝ, a : [0,1) ⇒ a is an _interior point_ of [0,1))` ,\n\nyou can use\n\n$~~$`It suffices to show that`\n\n$~~~~$`(∃ a : ℝ, a : [0,1) ∧ ¬ (a is an _interior point_ of [0,1))).`\n\nto move the negation symbol `¬` deeper inside the logical formula.\n\n**Note:** the logical operators should change according to De Morgan's laws!"
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nYou can unfold the definition of an open ball `B(p,r)` by using\n\n`Expand the definition of B.`\n\nThe usual rule, which states that underscores indicate what key words to use, does not apply here."
+    },
+    {
+      "type": "hint",
+      "text": "Click to open hint.\n<hint>\nYou might at some point need to show a goal of the form `x < y < z`. This is shorthand notation for `(x < y) ∧ (y < z)`. Hence you can split the proof by using $~~$ `We show both statements.`"
+    },
+    {
+      "type": "text",
+      "text": "**Note:** The loose `)` in the notation `[0,1)` disturbs Waterproofs matching `(` `)` highlinghting.\n"
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-2"
+    },
+    {
+      "type": "code",
+      "text": "Admitted."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-2"
+    },
+    {
+      "type": "text",
+      "text": "\nNow for the second part: show that the interval $[0,1)$ is not closed."
+    },
+    {
+      "type": "code",
+      "text": "\nLemma not_closed : ¬ ([0,1) is _closed_).\nProof."
+    },
+    {
+      "type": "input",
+      "start": true,
+      "id": "input-3"
+    },
+    {
+      "type": "code",
+      "text": "Admitted."
+    },
+    {
+      "type": "input",
+      "start": false,
+      "id": "input-3"
+    }
+  ]
+}
