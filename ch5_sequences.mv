@@ -1,0 +1,104 @@
+# Sequences<hint title="📦 Import libraries (click to open/close)">
+```coq
+Set Default Goal Selector "!".
+
+Require Import Coq.Reals.Reals.
+
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.
+Require Import Waterproof.Automation.
+Require Import Waterproof.Libs.Analysis.MetricSpaces.
+Require Import Waterproof.Libs.Analysis.SequencesMetric.
+
+Waterproof Enable Automation RealsAndIntegers.
+
+Open Scope R_scope.
+Open Scope metric_scope.
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint>Declaration of metric space $(X,\mathrm{dist})$ used in both exercises:
+```coq
+Context (X : Metric_Space).
+Notation "'dist(' x , y )" := (dist X x y) 
+  (format "'dist(' x ,  y ')'").
+```
+<hint title="💡 Hint (click to open/close)">Recall how to use the five properties of `dist` from the exercises on metric spaces.</hint>## Exercise 5.9.1 (Proposition 5.4.1)
+
+Before you start, two things to keep in mind.
+
+⚠️
+To write $n ≥ N_1$ for natural numbers $n, N_1$, you need to write
+```(n ≥ N1)%nat``` in Waterproof. 
+Similarly, if you need to pick a natural number $N_1$, use  ```Choose N1 := (..)%nat```.
+
+⚠️ The variable names `N` and `N0` are already used in the code that defines the real numbers. You cannot use these names any more. Instead use a name like `N1`.
+```coq
+Section Prop_5_4_1.
+```
+
+```coq
+Variable (p : X).
+Definition a (n : ℕ) := p.
+```
+
+```coq
+Lemma exercise_5_9_1 : a _converges to_ p.
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```
+
+```coq
+End Prop_5_4_1.
+```
+## Exercise 5.9.2 (Proposition 5.8.1)
+```coq
+Section Prop_5_8_1.
+
+Variables (a : ℕ → X) (k : ℕ) (p : X).
+
+Definition a_shift (n : nat) := a (n + k)%nat.
+```
+
+```coq
+Lemma exercise_5_9_2 : 
+  (a _converges to_ p) ⇔ (a_shift _converges to_ p).
+```
+
+```coq
+Proof.
+We show both directions.
+- We need to show that 
+    (a _converges to_ p ⇒ a_shift _converges to_ p).
+  Assume that (a converges to p) (i).
+  We need to show that 
+    (for all ε : ℝ, ε > 0 ⇒ 
+       there exists N1 : ℕ,
+         for all n : ℕ, (n ≥ N1)%nat ⇒
+           dist(a_shift(n), p) < ε).
+  Take ε : ℝ.
+  Assume that (ε > 0).
+  By (i) it holds that 
+    (∃ N2 : ℕ, ∀ n : ℕ, (n ≥ N2)%nat ⇒ dist(a(n), p) < ε).
+  Obtain such an N2.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+
+End Prop_5_8_1.
+```

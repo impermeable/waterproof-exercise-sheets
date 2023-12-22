@@ -1,0 +1,83 @@
+# Real-valued sequences
+<hint title="📦 Import libraries (click to open/close)">
+```coq
+Set Default Goal Selector "!".
+
+Require Import Coq.Reals.Reals.
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.
+Require Import Waterproof.Automation.
+Require Import Waterproof.Libs.Analysis.Sequences.
+
+Require Import Waterproof.Libs.Reals.
+
+Waterproof Enable Automation RealsAndIntegers.
+Waterproof Enable Automation Intuition.
+
+Open Scope R_scope.
+
+Definition prop_5_2_2 := is_bounded_equivalence.
+Definition application_of_prop_5_2_2 (a : ℕ → ℝ) :=
+  iff_trans(_, _, (is_bounded_above a ∧ is_bounded_below a), prop_5_2_2 a).
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint>
+## Exercise 6.8.1 (Proposition 6.1.4)
+<hint title="💡 Hint (click to open/close)">You might want to use that
+$$
+\text{for all } x, M ∈ ℝ, \text{ if } -M ≤ x \text{ and } x ≤ M \text{ then } |x| ≤ M
+$$and vice versa.
+</hint>
+```coq
+Section Prop_6_1_4.
+
+Variable a : ℕ → ℝ.
+
+Lemma exercise_6_8_1 : 
+  (a is _bounded_)
+    ⇔ 
+  (a is _bounded above_ ∧ a is _bounded below_).
+Proof.
+By application_of_prop_5_2_2 it suffices to show that
+  ((∃ M : ℝ, M > 0 ∧ ∀ n : ℕ, | a(n) | ≤ M) 
+    ⇔ 
+  (a is _bounded above_ ∧ a is _bounded below_)).
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+
+End Prop_6_1_4.
+```
+## Exercise 6.8.2 (Proposition 6.6.2 item (i))
+```coq
+Section Prop_6_2_2_i.
+Variable a : ℕ → ℝ.
+Definition a_opp (n : ℕ) := - a(n).
+```
+
+```coq
+Lemma exercise_6_8_2 : 
+  a _diverges to ∞_ 
+    ⇔ 
+  a_opp _diverges to -∞_.
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+
+End Prop_6_2_2_i.
+```

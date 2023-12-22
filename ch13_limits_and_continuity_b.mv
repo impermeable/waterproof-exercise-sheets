@@ -1,0 +1,53 @@
+# Limits and continuity
+<hint title="📦 Import libraries (click to open/close)">
+```coq
+Set Default Goal Selector "!".
+
+Require Import Coq.Reals.Reals.
+
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.
+Require Import Waterproof.Automation.
+Require Import Waterproof.Libs.Analysis.ContinuityDomainNat.
+
+Waterproof Enable Automation RealsAndIntegers.
+Waterproof Enable Automation Intuition.
+
+Open Scope R_scope.
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint>
+## Exercise 13.11.3
+```coq
+Section exercise_13_11_3.
+
+Variable Y : Metric_Space.
+Notation "'dist_Y(' x , z )" := (dist Y x z) (format "'dist_Y(' x ,  z ')'").
+Variable a : ℕ → Y.
+
+```
+
+```coq
+Lemma exercise_13_11_3 :
+  ∀ n : ℕ, a is _continuous_ in n.
+Proof.
+```
+<hint title="💡 Hint (click to open/close)">To use the *$\varepsilon - \delta$ characterization* of continutiy in a point `n : ℕ` , write
+
+`It suffices to show that (∀ ε : ℝ, ε > 0 ⇒ ∃ δ : ℝ, δ > 0 ∧ ∀ m : ℕ, 0 < |m - n| < δ ⇒ dist_Y(a(m),a(n)) < ε).`
+
+but another approach may be easier...</hint><input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```
+```coq
+End exercise_13_11_3.
+```

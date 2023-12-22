@@ -1,0 +1,76 @@
+# Exercises real numbers
+<hint title="📦 Import libraries (click to open/close)">
+```coq
+Require Import Coq.Reals.Reals.
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.
+Require Import Waterproof.Libs.Analysis.SupAndInf.
+
+Require Import Waterproof.Automation.
+
+Waterproof Enable Automation RealsAndIntegers.
+Waterproof Enable Automation Intuition.
+
+Open Scope R_scope.
+Open Scope subset_scope.
+
+Set Default Goal Selector "!".
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint>
+## Exercise 4.9.1
+```coq
+Lemma ex_4_9_1 : for all a b : ℝ, a < b ⇒ 
+    a is the infimum of [a,b). 
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```
+## Exercise 4.9.2
+```coq
+Section ex_4_9_2.
+
+Variable A : subset(ℝ).
+Hypothesis A_bdd_above : (exists b : ℝ, b is an _upper bound_ for A).
+Hypothesis A_nonempty : (exists a : ℝ, a : A).
+
+Lemma ex_4_9_2 : for all y : ℝ, (y is the _supremum_ of A) ∧ (y : A) ⇒ 
+  y is the _maximum_ of A.
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+
+End ex_4_9_2.
+```
+## Exercise 4.9.3
+```coq
+Lemma ex_4_9_3 : 4 is the supremum of [0,4).
+Proof.
+```
+<hint title="💡 Hint (click to open/close)">To use the *alternative characterization* of the supremum, write
+
+`It suffices to show that (4 is an upper bound for [0,4) ∧ 
+  for all ε : ℝ, ε > 0 ⇒ there exists a : ℝ, a : [0, 4) ∧ 4 - ε < a).`</hint><input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```

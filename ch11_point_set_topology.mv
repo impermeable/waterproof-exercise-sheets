@@ -1,0 +1,50 @@
+# Point-set topology<hint title="📦 Import libraries (click to open/close)">
+```coq
+Set Default Goal Selector "!".
+
+Require Import Coq.Reals.Reals.
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.
+Require Import Waterproof.Libs.Analysis.OpenAndClosed.
+Require Import Waterproof.Automation.
+
+Waterproof Enable Automation RealsAndIntegers.
+Waterproof Enable Automation Intuition.
+
+Open Scope R_scope.
+Open Scope subset_scope.
+
+Notation "'max(' x , y )" := (Rmax x y)
+  (format "'max(' x ,  y ')'").
+Notation "'min(' x , y )" := (Rmin x y)
+  (format "'min(' x ,  y ')'").
+```
+</hint><hint title="💡 Hint (click to open/close)">Recall that `x : B(p,r)` is equivalent to `|x - p| < r` .
+</hint>
+## Exercise: prove that the interval $[0, 1)$ is not open
+```coq
+Lemma not_open : ¬ ([0,1) is _open_).
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```
+
+## Exercise: prove that the interval $[0, 1)$ is not closed.
+```coq
+Lemma not_closed : ¬ ([0,1) is _closed_).
+Proof.
+```
+<input-area>
+```coq
+(* Type your proof here *)
+```
+</input-area>
+```coq
+Qed.
+```
