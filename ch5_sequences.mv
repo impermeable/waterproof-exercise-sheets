@@ -5,7 +5,10 @@ Set Default Goal Selector "!".
 Require Import Coq.Reals.Reals.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.MetricSpaces.
 Require Import Waterproof.Libs.Analysis.SequencesMetric.
@@ -23,7 +26,7 @@ Notation "'min(' x , y )" := (Rmin x y)
 </hint>Declaration of metric space $(X,\mathrm{dist})$ used in both exercises:
 ```coq
 Context (X : Metric_Space).
-Notation "'dist(' x , y )" := (dist X x y) 
+Notation "'dist(' x , y )" := (dist X x y)
   (format "'dist(' x ,  y ')'").
 ```
 <hint title="💡 Hint (click to open/close)">Recall how to use the five properties of `dist` from the exercises on metric spaces.</hint>## Exercise 5.9.1 (Proposition 5.4.1)
@@ -32,7 +35,7 @@ Before you start, two things to keep in mind.
 
 ⚠️
 To write $n ≥ N_1$ for natural numbers $n, N_1$, you need to write
-```(n ≥ N1)%nat``` in Waterproof. 
+```(n ≥ N1)%nat``` in Waterproof.
 Similarly, if you need to pick a natural number $N_1$, use  ```Choose N1 := (..)%nat```.
 
 ⚠️ The variable names `N` and `N0` are already used in the code that defines the real numbers. You cannot use these names any more. Instead use a name like `N1`.
@@ -71,26 +74,26 @@ Definition a_shift (n : nat) := a (n + k)%nat.
 ```
 
 ```coq
-Lemma exercise_5_9_2 : 
+Lemma exercise_5_9_2 :
   (a _converges to_ p) ⇔ (a_shift _converges to_ p).
 ```
 
 ```coq
 Proof.
 We show both directions.
-- We need to show that 
+- We need to show that
     (a _converges to_ p ⇒ a_shift _converges to_ p).
   Assume that (a converges to p) (i).
-  We need to show that 
-    (for all ε : ℝ, ε > 0 ⇒ 
-       there exists N1 : ℕ,
-         for all n : ℕ, (n ≥ N1)%nat ⇒
-           dist(a_shift(n), p) < ε).
-  Take ε : ℝ.
-  Assume that (ε > 0).
-  By (i) it holds that 
-    (∃ N2 : ℕ, ∀ n : ℕ, (n ≥ N2)%nat ⇒ dist(a(n), p) < ε).
-  Obtain such an N2.
+  By (i) it holds that
+    (∀ ε1 > 0, ∃ N2 ∈ ℕ, (∀ n ≥ N2, (dist(a(n), p) < ε1)%R)%nat) (ii).
+  We need to show that (∀ ε > 0, ∃ N1 ∈ ℕ,
+    (∀ n ≥ N1, (dist(a_shift(n), p) < ε)%R)%nat).
+  Take ε > 0.
+  Use ε1 := ε in (ii).
+  * Indeed, (ε > 0).
+  * It holds that (∃ N2 ∈ ℕ,
+      (∀ n ≥ N2, (dist(a(n), p) < ε)%R)%nat).
+    Obtain such an N2.
 ```
 <input-area>
 ```coq

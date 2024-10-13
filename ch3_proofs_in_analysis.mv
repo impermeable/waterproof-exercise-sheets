@@ -4,7 +4,9 @@ Require Import Coq.Reals.Reals.
 Require Import Qreals.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Automation.
 
 Waterproof Enable Automation RealsAndIntegers.
@@ -23,9 +25,8 @@ Notation "'min(' x , y )" := (Rmin x y)
 </hint>## Exercise 3.11.1
 ```coq
 Lemma exercise_3_11_1 :
-  ∃ M : ℝ,
-    ∀ x : ℝ,
-      (x : [0,5]) ⇒ (x ≤ M).
+  ∃ M ∈ ℝ,
+    ∀ x ∈ [0, 5], (x ≤ M).
 Proof.
 ```
 <input-area>
@@ -39,12 +40,10 @@ Qed.
 ## Exercise 3.11.2
 ```coq
 Lemma exercise_3_11_2 :
-  ∀ x : ℝ,
-    ∃ y : ℝ,
-      ∀ u : ℝ,
-        (u > 0) ⇒
-          ∃ v : ℝ,
-            (v > 0) ∧ (x + u < y + v).
+  ∀ x ∈ ℝ,
+    ∃ y ∈ ℝ,
+      ∀ u > 0,
+          ∃ v > 0, x + u < y + v.
 Proof.
 ```
 <input-area>

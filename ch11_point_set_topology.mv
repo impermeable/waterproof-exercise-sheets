@@ -4,7 +4,9 @@ Set Default Goal Selector "!".
 
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Libs.Analysis.OpenAndClosed.
 Require Import Waterproof.Automation.
 

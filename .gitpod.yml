@@ -1,4 +1,4 @@
-image: ghcr.io/impermeable/waterproof:gitpod-initial
+image: ghcr.io/impermeable/waterproof:gitpod-2024-initial
 
 vscode:
   extensions:

@@ -6,7 +6,10 @@ Require Import ZArith.ZArith.
 Require Import FunctionalExtensionality.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.SequencesMetric.
 Require Import Waterproof.Libs.Analysis.SubsequencesMetric.
@@ -17,6 +20,7 @@ Waterproof Enable Automation Intuition.
 Set Default Goal Selector "!".
 
 Open Scope R_scope.
+Open Scope subset_scope.
 
 Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
@@ -59,9 +63,9 @@ Qed.
 ```
 We now show that $c(n(k)) = a(n(k))$ for all $k : \mathbb{N}$. You can use this lemma later.
 ```coq
-Lemma c_n_k_equals_a_n_k : ∀ k : ℕ, c(n(k)) = a(n(k)).
+Lemma c_n_k_equals_a_n_k : ∀ k ∈ ℕ, c(n(k)) = a(n(k)).
 Proof.
-Take k : ℕ.
+Take k ∈ ℕ.
 It holds that
   (c(n(k)) = if n(k) is even then a(n(k)) else b(n(k))).
 It holds that (n(k) is even = true).
@@ -70,20 +74,22 @@ Qed.
 ```
 Now, the exercise itself:
 ```coq
-Lemma exercise_10_7_3 : 
+Lemma exercise_10_7_3 :
   p is an _accumulation point_ of c.
 Proof.
-We need to show that 
-  (∃ k : ℕ → ℕ, k is an index sequence ∧ 
+We need to show that
+  (∃ k ∈ ℕ → ℕ, k is an index sequence ∧
      c ◦ k converges to p).
 Choose k := (n).
-We show both statements.
-- By (n_is_index_sequence) we conclude that 
-    (k is an index sequence).
-- We need to show that (c ◦ n converges to p).
-  It holds that (a converges to p).
-  By prop_10_3_1 it suffices to show that 
-    (c ◦ n is a subsequence of a).
+* Indeed, (k ∈ (ℕ → ℕ)).
+* We need to show that (k is an _index sequence_ ∧ c ◦ k _converges to_ p).
+  We show both statements.
+  - By (n_is_index_sequence) we conclude that
+      (k is an index sequence).
+  - We need to show that (c ◦ n converges to p).
+    It holds that (a converges to p).
+    By prop_10_3_1 it suffices to show that
+      (c ◦ n is a subsequence of a).
 ```
 <input-area>
 ```coq

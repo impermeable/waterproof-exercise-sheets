@@ -5,7 +5,10 @@ Set Default Goal Selector "!".
 
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.Sequences.
 
@@ -15,6 +18,7 @@ Waterproof Enable Automation RealsAndIntegers.
 Waterproof Enable Automation Intuition.
 
 Open Scope R_scope.
+Open Scope subset_scope.
 
 Definition prop_5_2_2 := is_bounded_equivalence.
 Definition application_of_prop_5_2_2 (a : ℕ → ℝ) :=
@@ -37,14 +41,14 @@ Section Prop_6_1_4.
 
 Variable a : ℕ → ℝ.
 
-Lemma exercise_6_8_1 : 
+Lemma exercise_6_8_1 :
   (a is _bounded_)
-    ⇔ 
+    ⇔
   (a is _bounded above_ ∧ a is _bounded below_).
 Proof.
 By application_of_prop_5_2_2 it suffices to show that
-  ((∃ M : ℝ, M > 0 ∧ ∀ n : ℕ, | a(n) | ≤ M) 
-    ⇔ 
+  ((∃ M > 0, ∀ n ∈ ℕ, | a(n) | ≤ M)
+    ⇔
   (a is _bounded above_ ∧ a is _bounded below_)).
 ```
 <input-area>
@@ -65,9 +69,9 @@ Definition a_opp (n : ℕ) := - a(n).
 ```
 
 ```coq
-Lemma exercise_6_8_2 : 
-  a _diverges to ∞_ 
-    ⇔ 
+Lemma exercise_6_8_2 :
+  a _diverges to ∞_
+    ⇔
   a_opp _diverges to -∞_.
 Proof.
 ```

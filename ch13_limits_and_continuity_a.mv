@@ -6,7 +6,9 @@ Require Import Rbase.
 Require Import Rbasic_fun.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.ContinuityDomainR.
 
@@ -14,6 +16,7 @@ Waterproof Enable Automation RealsAndIntegers.
 Waterproof Enable Automation Intuition.
 
 Open Scope R_scope.
+Open Scope subset_scope.
 
 Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
@@ -24,12 +27,13 @@ Notation "'min(' x , y )" := (Rmin x y)
 ```coq
 Definition f (x : ℝ) := x.
 
-Lemma exercise_13_11_2 : ∀ a : ℝ, f is _continuous_ in a.
+Lemma exercise_13_11_2 : ∀ a ∈ ℝ, f is _continuous_ in a.
 Proof.
 ```
-<hint title="💡 Hint (click to open/close)">To use the *$\varepsilon - \delta$ characterization* of continutiy in a point `a : ℝ` , write
+<hint title="💡 Hint (click to open/close)">To use the *$\varepsilon - \delta$ characterization* of continutiy in a point `a ∈ ℝ` , write
 
-`It suffices to show that (∀ ε : ℝ, ε > 0 ⇒ ∃ δ : ℝ, δ > 0 ∧ ∀ x : ℝ, 0 < |f(x) - f(a)| < δ ⇒ |x - a| < ε).`</hint><input-area>
+`It suffices to show that
+  (∀ ε > 0, ∃ δ > 0, ∀ x ∈ ℝ, 0 < |x - a| < δ ⇒ |x - a| < ε).`</hint><input-area>
 ```coq
 (* Type your proof here *)
 ```
