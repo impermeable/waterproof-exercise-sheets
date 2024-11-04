@@ -32,10 +32,13 @@ Notation "'min(' x , y )" := (Rmin x y)
 Lemma example_reflexivity :
   0 = 0.
 Proof.
+Help. (* optional, ask for help, remove from final proof *)
 We conclude that (0 = 0).
 Qed.
 ```
 ### Try it yourself:
+
+**Note**: Note sure how to continue? You can always write the sentence `Help.` in your proof to ask for help. Please remove the sentence from your final proof.
 ```coq
 Lemma exercise_reflexivity :
   3 = 3.
@@ -503,6 +506,7 @@ We use induction on k.
 + We first show the base case ((0 ≤ n(0))%nat).
   We conclude that (0 ≤ n(0))%nat.
 + We now show the induction step.
+  Take k ∈ ℕ.
   Assume that (k ≤ n(k))%nat.
   It holds that (n(k) < n(k+1))%nat.
   We conclude that (k + 1 ≤ n(k + 1))%nat.
