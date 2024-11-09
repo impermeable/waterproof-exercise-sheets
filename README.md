@@ -2,6 +2,8 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/impermeable/waterproof-exercise-sheets/tree/exercises-2024-2025)
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/impermeable/waterproof-exercise-sheets/tree/exercises-2024-2025?quickstart=1)
+
 This repository contains examples of Waterproof exercise sheets.
 [Waterproof](https://github.com/impermeable/waterproof-vscode) is an adaptation of the Coq  proof assistant developed for use in mathematics education.
 Students type out their proofs in Waterproof and get immediate feedback on every proof step.
