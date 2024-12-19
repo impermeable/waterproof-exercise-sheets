@@ -15,75 +15,19 @@ Require Import Waterproof.Libs.Analysis.SequencesMetric.
 Require Import Waterproof.Libs.Analysis.SubsequencesMetric.
 Require Import Waterproof.Libs.Analysis.StrongInductionIndexSequence.
 
+Open Scope metric_scope.
+
 Waterproof Enable Automation RealsAndIntegers.
 Waterproof Enable Automation Intuition.
+
+Open Scope nat_scope.
 
 Inductive Color : Set :=
 | blue : Color
 | orange : Color.
 
-
-(* Methods for strong inductive definition of index sequence*)
-(*
-(* Get theorem from 'StrongInductionIndexSequence.v'. *)
-Section theorem_strong_induction.
-Require Import Waterproof.Libs.Analysis.StrongInductionIndexSequence.
-Theorem my_classic_strong_ind_index_seq_with_prop {Q : nat -> Prop}
-  (H0 : exists n_0 : nat, Q n_0)
-  (Hstep : forall (k : nat) (n : nat -> nat),
-    (forall l : nat, l <= k -> Q (n l))%nat ->
-      (forall l : nat, l < k -> n l < n (l + 1))%nat ->
-    exists n_kplus1 : nat, Q n_kplus1 /\ (n k < n_kplus1)%nat)
-  : exists n : nat -> nat, is_index_seq n /\ forall k : nat, Q (n k).
-Proof.
-  apply classic_strong_ind_index_seq_with_prop; assumption.
-Qed.
-End theorem_strong_induction.
-
-(* Define tactics and notation. *)
-Require Import Ltac2.Ltac2.
-Require Import Ltac2.Message.
-Local Ltac2 concat_list (ls : message list) : message :=
-  List.fold_right concat (of_string "") ls.
-
-Require Import Waterproof.Util.Goals.
-Require Import Waterproof.Util.MessagesToUser.
-
-Definition id_nat (n : nat) : nat := n.
-
-Local Ltac2 inductive_def_index_seq_n () :=
-  lazy_match! goal with
-  | [ |- exists n : nat -> nat, is_index_seq n /\ forall k : nat, @?p n k ] =>
-    let q := eval unfold id_nat in (fun l : nat => $p id_nat l) in
-    match Control.case (fun () => apply (@my_classic_strong_ind_index_seq_with_prop $q)) with
-    | Val _ => Control.focus 2 2 (fun () => apply StrongIndIndxSeq.unwrap)
-    | Err exn => throw (of_string "The index sequence cannot be defined using this technique.")
-    end
-  | [ |- _ ] => throw (of_string "The goal is not to define an index sequence.")
-  end.
-
-Ltac2 Notation "Define" "the" "index" "sequence" "n" "inductively" :=
-  panic_if_goal_wrapped ();
-  inductive_def_index_seq_n ().
-
-
-Local Ltac2 take_first_k () :=
-  lazy_match! goal with
-  | [|- StrongIndIndxSeq.Wrapper _] => apply StrongIndIndxSeq.wrap; intros k n
-  | [|- _] => throw (of_string "No need to introduce first k elements of sequence n.")
-  end.
-
-Ltac2 Notation "Take" "k" ":" "ℕ" "and" "assume" "n(0),...,n(k)" "are" "defined" :=
-  take_first_k ().
-
-(* Override old notation goal wrapper. *)
-Notation "'Add' 'the' 'following' 'line' 'to' 'the' 'proof:' 'Take' 'k' ':' 'ℕ' 'and' 'assume' 'n(0),...,n(k)' 'are' 'defined.'" :=
-  (StrongIndIndxSeq.Wrapper _) (
-    at level 99,
-    only printing,
-    format "'[ ' Add  the  following  line  to  the  proof: ']' '//'   Take  k  :  ℕ  and  assume  n(0),...,n(k)  are  defined."
-  ).
-*)
+Inductive answer : Type :=
+| Yes : answer.
 (** *)
 (** *)
 
@@ -94,18 +38,18 @@ Notation "'Add' 'the' 'following' 'line' 'to' 'the' 'proof:' 'Take' 'k' ':' 'ℕ
 ```coq
 Section colors.
 Variable P : ℕ → Color.
-Open Scope nat_scope.
-Parameter infinitely_many_blues :
-  ∀ k ∈ ℕ, ∃ m ≥ k, P(m) = blue.
 
-Lemma exercise_10_7_6 : ∃ n ∈ (ℕ → ℕ),
+Parameter infinitely_many_blues :
+  ∀ K ∈ ℕ, ∃ m ≥ K, P(m) = blue.
+
+Lemma exercise_10_7_6 : ∃ n : (ℕ → ℕ),
   (is_index_sequence n) ∧ (∀ k ∈ ℕ, P(n(k)) = blue).
 Proof.
 Define the index sequence n inductively.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -113,4 +57,19 @@ Qed.
 ```
 ```coq
 End colors.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
 ```

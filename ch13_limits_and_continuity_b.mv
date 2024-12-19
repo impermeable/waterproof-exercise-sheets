@@ -9,7 +9,9 @@ Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
 Require Import Waterproof.Notations.Reals.
 Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
+
 Require Import Waterproof.Libs.Analysis.ContinuityDomainNat.
 
 Waterproof Enable Automation RealsAndIntegers.
@@ -22,6 +24,11 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
 </hint>
 ## Exercise 13.11.3
@@ -46,7 +53,7 @@ Proof.
 
 but another approach may be easier...</hint><input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -54,4 +61,19 @@ Qed.
 ```
 ```coq
 End exercise_13_11_3.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
 ```

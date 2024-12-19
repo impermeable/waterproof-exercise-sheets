@@ -22,6 +22,11 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 10.
 ```
 </hint>Declaration of metric space $(X,\mathrm{dist})$ used in both exercises:
 ```coq
@@ -54,7 +59,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -64,7 +69,12 @@ Qed.
 ```coq
 End Prop_5_4_1.
 ```
-## Exercise 5.9.2 (Proposition 5.8.1)
+## Exercise 5.9.2 (Proposition 5.8.1)<hint title="💡 Hint">At some point you may need to help Waterproof with small steps, for instance rewriting explicitly as in:
+
+```
+It holds that (& dist(a(n), p) = dist(a((n-k) + k)%nat, p) = dist(a_shift(n - k)%nat, p)).
+```
+(Note that the above line only holds in a particular place in the proof, given certain choices made earlier).</hint>
 ```coq
 Section Prop_5_8_1.
 
@@ -85,23 +95,38 @@ We show both directions.
     (a _converges to_ p ⇒ a_shift _converges to_ p).
   Assume that (a converges to p) (i).
   By (i) it holds that
-    (∀ ε1 > 0, ∃ N2 ∈ ℕ, (∀ n ≥ N2, (dist(a(n), p) < ε1)%R)%nat) (ii).
+    (∀ ε1 > 0, ∃ N2 ∈ ℕ, ∀ n ≥ N2, dist(a(n), p) < ε1) (ii).
   We need to show that (∀ ε > 0, ∃ N1 ∈ ℕ,
-    (∀ n ≥ N1, (dist(a_shift(n), p) < ε)%R)%nat).
+    ∀ n ≥ N1, dist(a_shift(n), p) < ε).
   Take ε > 0.
   Use ε1 := ε in (ii).
-  * Indeed, (ε > 0).
-  * It holds that (∃ N2 ∈ ℕ,
-      (∀ n ≥ N2, (dist(a(n), p) < ε)%R)%nat).
-    Obtain such an N2.
+  { Indeed, (ε > 0). }
+  It holds that (∃ N2 ∈ ℕ,
+      ∀ n ≥ N2, dist(a(n), p) < ε).
+  Obtain such an N2.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
 Qed.
 
 End Prop_5_8_1.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
 ```

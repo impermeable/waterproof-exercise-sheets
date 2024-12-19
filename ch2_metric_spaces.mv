@@ -19,26 +19,49 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
 ```
 </hint>#### **Before we start, some remarks regarding syntax.**
-
-Recall from the `tutorial` that the membership relation symbol '$\in$' in Waterproof is replaced by ' : '.
 
 The formulation of the proof steps available in Waterproof is quite strict. You can always consult the tutorial to revisit these formulations.
 You can also click the water drop on the left and click on the "Tactics" button and a list with possible tactics will show up.
 
+#### **Declaration of own work**
+
+Before we start, please declare that the work below is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs below are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
 ## Exercise 2.7.1
 ```coq
 Section Exercise_2_7_1.
+
 Variable (Y : Metric_Space) (X : Set) (f : X → Y).
 Hypothesis f_is_injective : Injective f.
+
 Notation "'dist_Y(' x , z )" := (dist Y x z) (format "'dist_Y(' x ,  z ')'").
 
 Variable d : X -> X -> ℝ.
 Hypothesis definition_d :
-  forall x z : X, d x z = dist_Y(f(x), f(z)).
+  ∀ x ∈ X, ∀ z ∈ X, d(x, z) = dist_Y(f(x), f(z)).
 ```
-Because $\text{dist}_Y$ is a distance, it satisfies the five properties which define the concept of *distance*:
+The above basically says: Let $(Y, \mathsf{dist}_Y)$ be a metric space, let $X$ is a set, and assume $f : X \rightarrow Y$ is injective.
+
+Let the function $d : X \times X \rightarrow \mathbb{R}$ satisfy that for all $x, z \in X$,
+$$
+d(x, z) := \mathsf{dist}_Y(f(x), f(z)).
+$$
+In this exercise we would like to check that $d$ is a distance on $X$, by checking the five properties of a distance. Because $\text{dist}_Y$ is a distance, it satisfies those five properties which define the concept of *distance*:
 ```coq
 Check (dist_positive Y).
 Check (dist_non_degenerate Y).
@@ -66,7 +89,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -79,7 +102,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -92,7 +115,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -106,7 +129,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -119,7 +142,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -157,7 +180,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -171,7 +194,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -184,7 +207,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -201,7 +224,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -214,7 +237,7 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq

@@ -3,7 +3,11 @@
 ```coq
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
+
 Require Import Waterproof.Libs.Analysis.SupAndInf.
 
 Require Import Waterproof.Automation.
@@ -20,17 +24,22 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 10.
 ```
 </hint>
 ## Exercise 4.9.1
 ```coq
-Lemma ex_4_9_1 : for all a b : ℝ, a < b ⇒ 
-    a is the infimum of [a,b). 
+Lemma ex_4_9_1 : ∀ a ∈ ℝ, ∀ b ∈ ℝ, a < b ⇒
+    a is the infimum of [a,b).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -41,16 +50,16 @@ Qed.
 Section ex_4_9_2.
 
 Variable A : subset(ℝ).
-Hypothesis A_bdd_above : (exists b : ℝ, b is an _upper bound_ for A).
-Hypothesis A_nonempty : (exists a : ℝ, a : A).
+Hypothesis A_bdd_above : (∃ b ∈ ℝ, b is an _upper bound_ for A).
+Hypothesis A_nonempty : (∃ a ∈ ℝ, a ∈ A).
 
-Lemma ex_4_9_2 : for all y : ℝ, (y is the _supremum_ of A) ∧ (y : A) ⇒ 
+Lemma ex_4_9_2 : ∀ y ∈ ℝ, (y is the _supremum_ of A) ∧ (y ∈ A) ⇒
   y is the _maximum_ of A.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -65,10 +74,24 @@ Proof.
 ```
 <hint title="💡 Hint (click to open/close)">To use the *alternative characterization* of the supremum, write
 
-`It suffices to show that (4 is an upper bound for [0,4) ∧ 
-  for all ε : ℝ, ε > 0 ⇒ there exists a : ℝ, a : [0, 4) ∧ 4 - ε < a).`</hint><input-area>
+`It suffices to show that ((4 is an upper bound for [0,4))
+  ∧ (∀ ε > 0, ∃ a ∈ [0, 4), 4 - ε < a)).`</hint><input-area>
 ```coq
-(* Type your proof here *)
+
+```
+</input-area>
+```coq
+Qed.
+```
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
 ```
 </input-area>
 ```coq

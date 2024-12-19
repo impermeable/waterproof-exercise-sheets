@@ -9,6 +9,7 @@ Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
 Require Import Waterproof.Notations.Reals.
 Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.ContinuityDomainR.
 
@@ -22,6 +23,11 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
 </hint>## Exercise 13.11.2
 ```coq
@@ -35,7 +41,22 @@ Proof.
 `It suffices to show that
   (∀ ε > 0, ∃ δ > 0, ∀ x ∈ ℝ, 0 < |x - a| < δ ⇒ |x - a| < ε).`</hint><input-area>
 ```coq
-(* Type your proof here *)
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
 ```
 </input-area>
 ```coq
