@@ -4,7 +4,10 @@ Require Import Coq.Reals.Reals.
 Require Import Qreals.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 
 Waterproof Enable Automation RealsAndIntegers.
@@ -19,18 +22,24 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Local Hint Resolve Rplus_gt_compat : wp_reals.
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
 </hint>## Exercise 3.11.1
 ```coq
 Lemma exercise_3_11_1 :
-  ∃ M : ℝ,
-    ∀ x : ℝ,
-      (x : [0,5]) ⇒ (x ≤ M).
+  ∃ M ∈ ℝ,
+    ∀ x ∈ [0, 5], (x ≤ M).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -39,17 +48,51 @@ Qed.
 ## Exercise 3.11.2
 ```coq
 Lemma exercise_3_11_2 :
-  ∀ x : ℝ,
-    ∃ y : ℝ,
-      ∀ u : ℝ,
-        (u > 0) ⇒
-          ∃ v : ℝ,
-            (v > 0) ∧ (x + u < y + v).
+  ∀ x ∈ ℝ,
+    ∃ y ∈ ℝ,
+      ∀ u > 0,
+          ∃ v > 0, x + u < y + v.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
+```
+</input-area>
+```coq
+Qed.
+```
+## Exercise 3.11.4
+```coq
+Section Exercise_3_11_4.
+
+Variable f : ℝ → ℝ.
+Variable g : ℝ → ℝ.
+
+Lemma exercise_3_11_4 :
+  (∀ M1 ∈ ℝ, ∃ y > 0, ∀ x > y, f (x) > M1) ⇒
+    (∀ M2 < 4, ∃ z > 0, ∀ x > z, g (x) > M2) ⇒
+      ∃ c ∈ ℝ, f(c) + g(c) > 10.
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
 ```
 </input-area>
 ```coq

@@ -6,7 +6,10 @@ Require Import ZArith.ZArith.
 Require Import FunctionalExtensionality.
 
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.SequencesMetric.
 Require Import Waterproof.Libs.Analysis.SubsequencesMetric.
@@ -17,6 +20,7 @@ Waterproof Enable Automation Intuition.
 Set Default Goal Selector "!".
 
 Open Scope R_scope.
+Open Scope subset_scope.
 
 Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
@@ -30,6 +34,11 @@ Coercion Base : Metric_Space >-> Sortclass.
 (* For readability. *)
 Definition prop_10_3_1 := equivalent_subsequence_convergence.
 Notation "n 'is' 'even'" := (Nat.even n) (at level 68).
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
 </hint>## Exercise 10.7.3
 ```coq
@@ -37,7 +46,9 @@ Section exercise_10_7_3.
 
 Variable (X : Metric_Space) (a b : ℕ → X) (p : X).
 Notation "'dist(' x , y )" := (dist X x y) (format "'dist(' x ,  y ')'").
+
 Hypothesis (a_converges_to_p : a converges to p).
+
 Definition c (k : ℕ) := if k is even then a(k) else b(k).
 
 Open Scope nat_scope.
@@ -51,17 +62,17 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
 Qed.
 ```
-We now show that $c(n(k)) = a(n(k))$ for all $k : \mathbb{N}$. You can use this lemma later.
+We now show that $c(n(k)) = a(n(k))$ for all $k ∈ \mathbb{N}$. You can use this lemma later.
 ```coq
-Lemma c_n_k_equals_a_n_k : ∀ k : ℕ, c(n(k)) = a(n(k)).
+Lemma c_n_k_equals_a_n_k : ∀ k ∈ ℕ, c(n(k)) = a(n(k)).
 Proof.
-Take k : ℕ.
+Take k ∈ ℕ.
 It holds that
   (c(n(k)) = if n(k) is even then a(n(k)) else b(n(k))).
 It holds that (n(k) is even = true).
@@ -70,24 +81,25 @@ Qed.
 ```
 Now, the exercise itself:
 ```coq
-Lemma exercise_10_7_3 : 
+Lemma exercise_10_7_3 :
   p is an _accumulation point_ of c.
 Proof.
-We need to show that 
-  (∃ k : ℕ → ℕ, k is an index sequence ∧ 
+We need to show that
+  (∃ k : ℕ → ℕ, k is an index sequence ∧
      c ◦ k converges to p).
 Choose k := (n).
+We need to show that (k is an _index sequence_ ∧ c ◦ k _converges to_ p).
 We show both statements.
-- By (n_is_index_sequence) we conclude that 
+- By (n_is_index_sequence) we conclude that
     (k is an index sequence).
 - We need to show that (c ◦ n converges to p).
   It holds that (a converges to p).
-  By prop_10_3_1 it suffices to show that 
+  By prop_10_3_1 it suffices to show that
     (c ◦ n is a subsequence of a).
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -95,4 +107,19 @@ Qed.
 ```
 ```coq
 End exercise_10_7_3.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
 ```

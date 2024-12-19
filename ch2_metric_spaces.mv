@@ -2,7 +2,10 @@
 ```coq
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Coq.Logic.FinFun.
 
@@ -16,24 +19,49 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
 ```
 </hint>#### **Before we start, some remarks regarding syntax.**
-
-Recall from the `tutorial` that the membership relation symbol '$\in$' in Waterproof is replaced by ' : '.
 
 The formulation of the proof steps available in Waterproof is quite strict. You can always consult the tutorial to revisit these formulations.
 You can also click the water drop on the left and click on the "Tactics" button and a list with possible tactics will show up.
 
+#### **Declaration of own work**
+
+Before we start, please declare that the work below is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs below are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
 ## Exercise 2.7.1
 ```coq
 Section Exercise_2_7_1.
+
 Variable (Y : Metric_Space) (X : Set) (f : X → Y).
 Hypothesis f_is_injective : Injective f.
+
 Notation "'dist_Y(' x , z )" := (dist Y x z) (format "'dist_Y(' x ,  z ')'").
 
-Definition d (x z : X) := dist_Y(f(x), f(z)).
+Variable d : X -> X -> ℝ.
+Hypothesis definition_d :
+  ∀ x ∈ X, ∀ z ∈ X, d(x, z) = dist_Y(f(x), f(z)).
 ```
-Because $\text{dist}_Y$ is a distance, it satisfies the five properties which define the concept of *distance*:
+The above basically says: Let $(Y, \mathsf{dist}_Y)$ be a metric space, let $X$ is a set, and assume $f : X \rightarrow Y$ is injective.
+
+Let the function $d : X \times X \rightarrow \mathbb{R}$ satisfy that for all $x, z \in X$,
+$$
+d(x, z) := \mathsf{dist}_Y(f(x), f(z)).
+$$
+In this exercise we would like to check that $d$ is a distance on $X$, by checking the five properties of a distance. Because $\text{dist}_Y$ is a distance, it satisfies those five properties which define the concept of *distance*:
 ```coq
 Check (dist_positive Y).
 Check (dist_non_degenerate Y).
@@ -56,12 +84,12 @@ We conclude that
   (&  3 < 4 = 2 + 2).
 `</hint>
 ```coq
-Lemma d_positive : ∀ x y : X, d(x, y) ≥ 0.
+Lemma d_positive : ∀ x ∈ X, ∀ y ∈ X, d(x, y) ≥ 0.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -69,12 +97,12 @@ Qed.
 ```
 
 ```coq
-Lemma d_non_degenerate : ∀ x y : X, (d(x, y) = 0) ⇒ (x = y).
+Lemma d_non_degenerate : ∀ x ∈ X, ∀ y ∈ X, (d(x, y) = 0) ⇒ (x = y).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -82,12 +110,12 @@ Qed.
 ```
 
 ```coq
-Lemma d_symmetric : ∀ x y : X, d(x, y) = d(y, x).
+Lemma d_symmetric : ∀ x ∈ X, ∀ y ∈ X, d(x, y) = d(y, x).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -95,12 +123,13 @@ Qed.
 ```
 
 ```coq
-Lemma d_triangle_inequality : ∀ x y z : X, d(x, z) ≤ d(x, y) + d(y, z).
+Lemma d_triangle_inequality : ∀ x ∈ X, ∀ y ∈ X, ∀ z ∈ X,
+  d(x, z) ≤ d(x, y) + d(y, z).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -108,12 +137,12 @@ Qed.
 ```
 
 ```coq
-Lemma d_reflexive : ∀ x : X, d(x, x) = 0.
+Lemma d_reflexive : ∀ x ∈ X, d(x, x) = 0.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -129,7 +158,7 @@ Module Exercise_2_7_3.
 ```
 Consider the function $d : \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ defined by
 $$
-  d(a, b) = 
+  d(a, b) =
 	\begin{cases}
 		0, &\text{if } a = b,\\
 		3, &\text{if } a \neq b.
@@ -146,12 +175,12 @@ Notation "'d(' a , b )" := (d_discrete_R a b) (format "'d(' a ,  b ')'").
 ```
 
 ```coq
-Lemma d_positive : ∀ a b : ℝ, d(a, b) ≥ 0.
+Lemma d_positive : ∀ a ∈ ℝ, ∀ b ∈ ℝ, d(a, b) ≥ 0.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -160,12 +189,12 @@ Qed.
 
 ```coq
 Lemma d_non_degenerate :
-  ∀ a b : ℝ, (d(a, b) = 0) ⇒ (a = b).
+  ∀ a ∈ ℝ, ∀ b ∈ ℝ, (d(a, b) = 0) ⇒ (a = b).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -173,29 +202,29 @@ Qed.
 ```
 
 ```coq
-Lemma d_symmetric : ∀ a b : ℝ, d(a, b) = d(b, a).
+Lemma d_symmetric : ∀ a ∈ ℝ, ∀ b ∈ ℝ, d(a, b) = d(b, a).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
 Qed.
 ```
 <hint title="💡 Hint (click to open/close)">
-If you know that $a = b$ and $b = c$, what do you know about the relation between $a$ and $c$? 
+If you know that $a = b$ and $b = c$, what do you know about the relation between $a$ and $c$?
 What do you know for the case when $a \neq b$ and $b = c$ or when $a = b$ and $b \neq c$?
 And for $a \neq b$ and $b \neq c$?</hint>
 ```coq
 Lemma d_triangle_inequality :
-  ∀ a b c : ℝ, d(a, c) ≤ d(a, b) + d(b, c).
+  ∀ a ∈ ℝ, ∀ b ∈ ℝ, ∀ c ∈ ℝ, d(a, c) ≤ d(a, b) + d(b, c).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -203,12 +232,12 @@ Qed.
 ```
 
 ```coq
-Lemma d_reflexive : ∀ a : ℝ, d(a, a) = 0.
+Lemma d_reflexive : ∀ a ∈ ℝ, d(a, a) = 0.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq

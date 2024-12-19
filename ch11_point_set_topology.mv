@@ -4,7 +4,10 @@ Set Default Goal Selector "!".
 
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Libs.Analysis.OpenAndClosed.
 Require Import Waterproof.Automation.
 
@@ -18,17 +21,45 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
-</hint><hint title="💡 Hint (click to open/close)">Recall that `x : B(p,r)` is equivalent to `|x - p| < r` .
+</hint><hint title="💡 Hint (click to open/close)">Recall that `x ∈ B(p,r)` is equivalent to `|x - p| < r` .
 </hint>
 ## Exercise: prove that the interval $[0, 1)$ is not open
+
+**Hint:** Recall how to expand definitions. You can for instance use
+```
+Expand the definition of open.
+```
+to use the definition of open in one of the assumptions.
+
+Note however that this definition of open uses old syntax, and will read
+```
+It holds that (∀ a, [0, 1) a ⇨ a is an _interior point_ of [0, 1)).
+```
+This should and can be read as
+```
+It holds that (∀ a ∈ [0, 1), a is an _interior point_ of [0, 1)).
+```
+**Hint:** Recall that you can use
+```
+We claim that (...).
+{
+  (* proof of claim here *)
+}
+```
+to make a claim and prove it.
 ```coq
 Lemma not_open : ¬ ([0,1) is _open_).
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -42,7 +73,22 @@ Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
+```
+</input-area>
+```coq
+Qed.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
 ```
 </input-area>
 ```coq

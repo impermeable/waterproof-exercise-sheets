@@ -5,7 +5,10 @@ Set Default Goal Selector "!".
 
 Require Import Coq.Reals.Reals.
 Require Import Waterproof.Tactics.
-Require Import Waterproof.Notations.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
 Require Import Waterproof.Libs.Analysis.Sequences.
 
@@ -15,6 +18,7 @@ Waterproof Enable Automation RealsAndIntegers.
 Waterproof Enable Automation Intuition.
 
 Open Scope R_scope.
+Open Scope subset_scope.
 
 Definition prop_5_2_2 := is_bounded_equivalence.
 Definition application_of_prop_5_2_2 (a : ℕ → ℝ) :=
@@ -24,6 +28,11 @@ Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Set Default Timeout 20.
 ```
 </hint>
 ## Exercise 6.8.1 (Proposition 6.1.4)
@@ -37,19 +46,19 @@ Section Prop_6_1_4.
 
 Variable a : ℕ → ℝ.
 
-Lemma exercise_6_8_1 : 
+Lemma exercise_6_8_1 :
   (a is _bounded_)
-    ⇔ 
+    ⇔
   (a is _bounded above_ ∧ a is _bounded below_).
 Proof.
 By application_of_prop_5_2_2 it suffices to show that
-  ((∃ M : ℝ, M > 0 ∧ ∀ n : ℕ, | a(n) | ≤ M) 
-    ⇔ 
+  ((∃ M > 0, ∀ n ∈ ℕ, | a(n) | ≤ M)
+    ⇔
   (a is _bounded above_ ∧ a is _bounded below_)).
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
@@ -65,19 +74,34 @@ Definition a_opp (n : ℕ) := - a(n).
 ```
 
 ```coq
-Lemma exercise_6_8_2 : 
-  a _diverges to ∞_ 
-    ⇔ 
+Lemma exercise_6_8_2 :
+  a _diverges to ∞_
+    ⇔
   a_opp _diverges to -∞_.
 Proof.
 ```
 <input-area>
 ```coq
-(* Type your proof here *)
+
 ```
 </input-area>
 ```coq
 Qed.
 
 End Prop_6_2_2_i.
+```
+
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
 ```
