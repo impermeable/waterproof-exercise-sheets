@@ -26,8 +26,6 @@ Notation "'min(' x , y )" := (Rmin x y)
 
 Inductive answer : Type :=
 | Yes : answer.
-
-Set Default Timeout 20.
 ```
 </hint>## Exercise 13.11.2
 ```coq
@@ -39,7 +37,7 @@ Proof.
 <hint title="💡 Hint (click to open/close)">To use the *$\varepsilon - \delta$ characterization* of continutiy in a point `a ∈ ℝ` , write
 
 `It suffices to show that
-  (∀ ε > 0, ∃ δ > 0, ∀ x ∈ ℝ, 0 < |x - a| < δ ⇒ |x - a| < ε).`</hint><input-area>
+  ∀ ε > 0, ∃ δ > 0, ∀ x ∈ ℝ, 0 < |x - a| < δ ⇒ |x - a| < ε.`</hint><input-area>
 ```coq
 
 ```
@@ -47,7 +45,6 @@ Proof.
 ```coq
 Qed.
 ```
-
 ## Declaration of own work
 
 Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.

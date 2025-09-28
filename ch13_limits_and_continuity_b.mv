@@ -27,8 +27,6 @@ Notation "'min(' x , y )" := (Rmin x y)
 
 Inductive answer : Type :=
 | Yes : answer.
-
-Set Default Timeout 20.
 ```
 </hint>
 ## Exercise 13.11.3
@@ -62,7 +60,6 @@ Qed.
 ```coq
 End exercise_13_11_3.
 ```
-
 ## Declaration of own work
 
 Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
