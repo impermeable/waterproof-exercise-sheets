@@ -11,24 +11,14 @@ The numbering of the exercises refers to the [lecture notes](https://www.win.tue
 
 ## Try it out:
 
-There are two options to try out these Waterproof exercise sheets in your browser: through Gitpod and through Github codespaces. Both services provide a free number of hours per month.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/impermeable/waterproof-exercise-sheets)
-
-Please note that the above link always opens up a new workspace. If you want to resume a previously opened workspace, then it is better to visit [https://gitpod.io/workspaces](https://gitpod.io/workspaces).
-
-To open the exercises in Github codespaces, you can click on the following link.
+You can try out these exercises in Github codespaces, which is a service that offers a free number of hours per month. To open the exercises in Github codespaces, you can click on the following link.
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/impermeable/waterproof-exercise-sheets?quickstart=1)
 
 This link should give you the option of continuing in an earlier opened workspace, if you have opened these exercises in codespaces before.
 
-Tip: make sure you close your Gitpod workspace or Github codespace envorinment after using it.
+Tip: make sure you close your Github codespace environment after using it.
 
 ## Tutorial
 
 This repository also contains the Waterproof tutorial, `tutorial.mv`, which explains how to use Waterproof's custom proof language.
-
-<!-- * `Tutorial-just-examples.wpe` leaves out all descriptive text from the tutorial, it only contains examples how tactics can be used to show specific goals.
-_These tactics were developed specifically for Waterproof, see the [coq-waterproof](https://github.com/impermeable/coq-waterproof) library._ -->
-

@@ -27,8 +27,6 @@ Local Hint Resolve Rplus_gt_compat : wp_reals.
 
 Inductive answer : Type :=
 | Yes : answer.
-
-Set Default Timeout 20.
 ```
 </hint>## Exercise 3.11.1
 ```coq
@@ -83,7 +81,6 @@ Proof.
 ```coq
 Qed.
 ```
-
 ## Declaration of own work
 
 Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.

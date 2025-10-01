@@ -27,8 +27,6 @@ Notation "'min(' x , y )" := (Rmin x y)
 
 Inductive answer : Type :=
 | Yes : answer.
-
-Set Default Timeout 10.
 ```
 </hint>
 ## Exercise 4.9.1
@@ -74,8 +72,8 @@ Proof.
 ```
 <hint title="💡 Hint (click to open/close)">To use the *alternative characterization* of the supremum, write
 
-`It suffices to show that ((4 is an upper bound for [0,4))
-  ∧ (∀ ε > 0, ∃ a ∈ [0, 4), 4 - ε < a)).`</hint><input-area>
+`It suffices to show that (4 is an upper bound for [0,4))
+  ∧ (∀ ε > 0, ∃ a ∈ [0, 4), 4 - ε < a).`</hint><input-area>
 ```coq
 
 ```

@@ -31,8 +31,6 @@ Notation "'min(' x , y )" := (Rmin x y)
 
 Inductive answer : Type :=
 | Yes : answer.
-
-Set Default Timeout 20.
 ```
 </hint>
 ## Exercise 6.8.1 (Proposition 6.1.4)

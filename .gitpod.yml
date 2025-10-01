@@ -1,5 +1,0 @@
-image: ghcr.io/impermeable/waterproof:gitpod-2.2.0
-
-vscode:
-  extensions:
-    - waterproof-tue.waterproof
