@@ -562,7 +562,6 @@ Lemma example_expand :
   ∀ x ∈ ℝ, square x ≥ 0.
 Proof.
 Take x ∈ (ℝ).
-Waterproof Disable Filter Errors.
 Expand square.
   (* Remove the above line in your own code! *)
 Expand All.
