@@ -1,7 +1,6 @@
 # Construct index sequences
 <hint title="📦 Import libraries (click to open/close)">
 ```coq
-Require Import Arith.Even.
 Require Import ZArith.ZArith.
 Require Import FunctionalExtensionality.
 

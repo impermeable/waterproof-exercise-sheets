@@ -1,13 +1,14 @@
 # Metric spaces<hint title="📦 Import libraries (click to open/close)">
 ```coq
-Require Import Coq.Reals.Reals.
+From Stdlib Require Import Reals.Reals.
+From Stdlib Require Import Sets.Image.
 Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
 Require Import Waterproof.Notations.Reals.
 Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
-Require Import Coq.Logic.FinFun.
+Locate Functions.injective.
 
 Require Import Waterproof.Libs.Analysis.MetricSpaces.
 
@@ -33,7 +34,7 @@ You can also click the water drop on the left and click on the "Tactics" button 
 Section Exercise_2_7_1.
 
 Variable (Y : Metric_Space) (X : Set) (f : X → Y).
-Hypothesis f_is_injective : Injective f.
+Hypothesis f_is_injective : injective _ _ f.
 
 Notation "'dist_Y(' x , z )" := (dist Y x z) (format "'dist_Y(' x ,  z ')'").
 

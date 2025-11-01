@@ -21,4 +21,4 @@ Tip: make sure you close your Github codespace environment after using it.
 
 ## Tutorial
 
-This repository also contains the Waterproof tutorial, `tutorial.mv`, which explains how to use Waterproof's custom proof language.
+This repository also contains the Waterproof tutorial, `waterproof_tutorial.mv`, which explains how to use Waterproof's custom proof language.

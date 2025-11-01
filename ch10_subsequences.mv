@@ -1,8 +1,7 @@
 # Subsequences<hint title="📦 Import libraries (click to open/close)">
 ```coq
 Require Import Coq.Reals.Reals.
-Require Import Arith.Even.
-Require Import ZArith.ZArith.
+From Stdlib Require Import ZArith.ZArith.
 Require Import FunctionalExtensionality.
 
 Require Import Waterproof.Tactics.
@@ -34,9 +33,11 @@ Coercion Base : Metric_Space >-> Sortclass.
 Inductive answer : Type :=
 | Yes : answer.
 
+Locate Even.
+
 (* For readability. *)
 Definition prop_10_3_1 := equivalent_subsequence_convergence.
-Notation "n 'is' 'even'" := (Nat.even n) (at level 68).
+Notation "n 'is' 'even'" := (PeanoNat.Nat.even n) (at level 69).
 ```
 </hint>## Exercise 10.7.3
 ```coq
