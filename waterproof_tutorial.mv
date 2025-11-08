@@ -2,8 +2,8 @@
 
 Try to solve the exercises below by inspecting the examples. Not sure how to start? You can type **Ctrl + space** or **Command + space** to get a list of possible options.<hint title="📦 Import libraries (click to open/close)">
 ```coq
-Require Import Rbase.
-Require Import Rfunctions.
+From Stdlib Require Import Rbase.
+From Stdlib Require Import Rfunctions.
 
 Require Import Waterproof.Waterproof.
 Require Import Waterproof.Notations.Common.
@@ -16,9 +16,13 @@ Require Import Waterproof.Automation.
 
 Waterproof Enable Automation RealsAndIntegers.
 
+
 Open Scope R_scope.
 Open Scope subset_scope.
 Set Default Goal Selector "!".
+
+Set Bullet Behavior "Waterproof Relaxed Subproofs".
+
 
 Notation "'max(' x , y )" := (Rmax x y)
   (format "'max(' x ,  y ')'").
@@ -33,7 +37,7 @@ Lemma example_reflexivity :
   0 = 0.
 Proof.
 Help. (* optional, ask for help, remove from final proof *)
-We conclude that (0 = 0).
+We conclude that 0 = 0.
 Qed.
 ```
 ### Try it yourself:
@@ -59,8 +63,8 @@ Sometimes it is useful to remind the reader or yourself of what you need to show
 Lemma example_we_need_to_show_that :
   2 = 2.
 Proof.
-We need to show that (2 = 2).
-We conclude that (2 = 2).
+We need to show that 2 = 2.
+We conclude that 2 = 2.
 Qed.
 ```
 ### Try it yourself
@@ -86,7 +90,7 @@ Lemma example_take :
     x = x.
 Proof.
 Take x ∈ ℝ.
-We conclude that (x = x).
+We conclude that x = x.
 Qed.
 ```
 ### Try it yourself:
@@ -111,9 +115,9 @@ Lemma example_choose :
   ∃ y ∈ ℝ,
     y < 3.
 Proof.
-Choose y := (2).
-* Indeed, (y ∈ ℝ).
-* We conclude that (y < 3).
+Choose y := 2.
+{ Indeed, y ∈ ℝ. } (* Note: there needs to be a space between '.' and '}' *)
+We conclude that y < 3.
 Qed.
 ```
 ### Try it yourself
@@ -140,11 +144,11 @@ Lemma example_combine_quantifiers :
       ∃ c ∈ ℝ,
         c > b - a.
 Proof.
-Take a ∈ (ℝ).
+Take a ∈ ℝ.
 Take b > 5.
-Choose c := (b - a + 1).
-* Indeed, (c ∈ ℝ).
-* We conclude that (c > b - a).
+Choose c := b - a + 1.
+{ Indeed, c ∈ ℝ. }
+We conclude that c > b - a.
 Qed.
 ```
 ### Try it yourself
@@ -171,9 +175,9 @@ Lemma example_assumptions :
   ∀ a ∈ ℝ,
     a < 0 ⇒ - a > 0.
 Proof.
-Take a ∈ (ℝ).
-Assume that (a < 0).
-We conclude that (- a > 0).
+Take a ∈ ℝ.
+Assume that a < 0.
+We conclude that - a > 0.
 Qed.
 ```
 ### Another example with explicit labels
@@ -182,9 +186,9 @@ Lemma example_assumptions_2 :
   ∀ a ∈ ℝ,
     a < 0 ⇒ - a > 0.
 Proof.
-Take a ∈ (ℝ).
-Assume that (a < 0) (i). (* The label here is optional *)
-By (i) we conclude that (- a > 0).
+Take a ∈ ℝ.
+Assume that a < 0 as (i). (* The label here is optional *)
+By (i) we conclude that - a > 0.
 Qed.
 ```
 ### Try it yourself
@@ -192,7 +196,7 @@ Qed.
 Lemma exercise_assumptions :
   ∀ a ≥ 2,
     ∀ b ∈ ℝ,
-      a > 0 ⇒ (b > 0 ⇒ a + b > - 1).
+      a > 0 ⇒ b > 0 ⇒ a + b > - 1.
 Proof.
 ```
 <input-area>
@@ -213,8 +217,8 @@ Parameter f_increasing : ∀ x ∈ ℝ, ∀ y ∈ ℝ, x ≤ y ⇒ f(x) ≤ f(y)
 Lemma example_inequalities:
   2 < f(0) ⇒ 2 < f(1).
 Proof.
-Assume that (2 < f(0)).
-By (f_increasing) we conclude that (& 2 < f(0) ≤ f(1)).
+Assume that 2 < f(0).
+By f_increasing we conclude that & 2 < f(0) ≤ f(1).
 Qed.
 ```
 ### Try it yourself
@@ -238,9 +242,9 @@ Qed.
 Lemma example_backwards :
   3 < f(0) ⇒ 2 < f(5).
 Proof.
-Assume that (3 < f(0)).
-It suffices to show that (f(0) ≤ f(5)).
-By (f_increasing) we conclude that (f(0) ≤ f(5)).
+Assume that 3 < f(0).
+It suffices to show that f(0) ≤ f(5).
+By f_increasing we conclude that f(0) ≤ f(5).
 Qed.
 ```
 ### Try it yourself
@@ -263,9 +267,9 @@ Qed.
 Lemma example_forwards :
   7 < f(-1) ⇒ 2 < f(6).
 Proof.
-Assume that (7 < f(-1)).
-By (f_increasing) it holds that (f(-1) ≤ f(6)).
-We conclude that (2 < f(6)).
+Assume that 7 < f(-1).
+By f_increasing it holds that f(-1) ≤ f(6).
+We conclude that 2 < f(6).
 Qed.
 ```
 ### Try it yourself
@@ -295,11 +299,11 @@ Lemma example_use_for_all :
        x + 1/2 < 1.
 Proof.
 Take x ∈ ℝ.
-Assume that (∀ ε > 0, x < ε) (i).
-Use ε := (1/2) in (i).
-* Indeed, (1 / 2 > 0).
-* It holds that  (x < 1 / 2).
-  We conclude that (x + 1/2 < 1).
+Assume that ∀ ε > 0, x < ε as (i).
+Use ε := 1/2 in (i).
+{ Indeed, 1 / 2 > 0. }
+It holds that  x < 1 / 2.
+We conclude that x + 1/2 < 1.
 Qed.
 ```
 ### Try it yourself
@@ -328,9 +332,9 @@ Lemma example_use_there_exists :
       10 < x.
 Proof.
 Take x ∈ ℝ.
-Assume that (∃ y > 10, y < x) (i).
+Assume that ∃ y > 10, y < x as (i).
 Obtain such a y.
-We conclude that (& 10 < y < x).
+We conclude that & 10 < y < x.
 Qed.
 ```
 ### Another example
@@ -341,9 +345,9 @@ Lemma example_use_there_exists_2 :
       12 < x.
 Proof.
 Take x ∈ ℝ.
-Assume that (∃ y > 14, y < x) (i).
+Assume that ∃ y > 14, y < x as (i).
 Obtain y according to (i).
-We conclude that (& 12 < y < x).
+We conclude that & 12 < y < x.
 Qed.
 ```
 ### Try it yourself
@@ -371,13 +375,13 @@ Lemma example_contradicition :
     (∀ ε > 0, x > 1 - ε) ⇒
       x ≥ 1.
 Proof.
-Take x ∈ (ℝ).
-Assume that (∀ ε > 0, x > 1 - ε) (i).
-We need to show that (x ≥ 1).
+Take x ∈ ℝ.
+Assume that ∀ ε > 0, x > 1 - ε as (i).
+We need to show that x ≥ 1.
 We argue by contradiction.
-Assume that (¬ (x ≥ 1)).
-It holds that ((1 - x) > 0).
-By (i) it holds that (x > 1 - (1 - x)).
+Assume that ¬ (x ≥ 1).
+It holds that (1 - x) > 0.
+By (i) it holds that x > 1 - (1 - x).
 Contradiction.
 Qed.
 ```
@@ -409,13 +413,13 @@ Proof.
 ```coq
 Take x ∈ (ℝ).
 Take y ∈ (ℝ).
-Either (x < y) or (x ≥ y).
-- Case (x < y).
-  It suffices to show that (max(x, y) = y).
-  We conclude that (max(x, y) = y).
-- Case (x ≥ y).
-  It suffices to show that (max(x, y) = x).
-  We conclude that (max(x, y) = x).
+Either x < y or x ≥ y.
+- Case x < y.
+  It suffices to show that max(x, y) = y.
+  We conclude that max(x, y) = y.
+- Case x ≥ y.
+  It suffices to show that max(x, y) = x.
+  We conclude that max(x, y) = x.
 Qed.
 ```
 ### Try it yourself
@@ -439,12 +443,12 @@ Qed.
 Lemma example_both_statements :
   ∀ x ∈ ℝ, x^2 ≥ 0 ∧ | x | ≥ 0.
 Proof.
-Take x ∈ (ℝ).
+Take x ∈ ℝ.
 We show both statements.
-* We need to show that (x^2 ≥ 0).
-  We conclude that (x^2 ≥ 0).
-* We need to show that (| x | ≥ 0).
-  We conclude that (| x | ≥  0).
+* We need to show that x^2 ≥ 0.
+  We conclude that x^2 ≥ 0.
+* We need to show that | x | ≥ 0.
+  We conclude that | x | ≥  0.
 Qed.
 ```
 ### Try it yourself
@@ -468,15 +472,15 @@ Lemma example_both_directions :
   ∀ x ∈ ℝ, ∀ y ∈ ℝ,
     x < y ⇔ y > x.
 Proof.
-Take x ∈ (ℝ).
-Take y ∈ (ℝ).
+Take x ∈ ℝ.
+Take y ∈ ℝ.
 We show both directions.
-++ We need to show that (x < y ⇒ y > x).
-   Assume that (x < y).
-   We conclude that (y > x).
-++ We need to show that (y > x ⇒ x < y).
-   Assume that (y > x).
-   We conclude that (x < y).
+++ We need to show that x < y ⇒ y > x.
+   Assume that x < y.
+   We conclude that y > x.
+++ We need to show that y > x ⇒ x < y.
+   Assume that y > x.
+   We conclude that x < y.
 Qed.
 ```
 ### Try it yourself
@@ -500,10 +504,10 @@ Lemma example_induction :
   ∀ n : ℕ → ℕ, (∀ k ∈ ℕ, (n(k) < n(k+1))%nat) ⇒
     ∀ k ∈ ℕ, (k ≤ n(k))%nat.
 Proof.
-Take n : (ℕ → ℕ).
+Take n : ℕ → ℕ.
 Assume that (∀ k ∈ ℕ, n(k) < n(k+1))%nat.
 We use induction on k.
-+ We first show the base case ((0 ≤ n(0))%nat).
++ We first show the base case (0 ≤ n(0))%nat.
   We conclude that (0 ≤ n(0))%nat.
 + We now show the induction step.
   Take k ∈ ℕ.
@@ -529,22 +533,41 @@ Proof.
 Qed.
 ```
 ## 17. Expand definitions
-By writing `Expand the definition of square.` you get suggestions on how to use the definition of _square_ in your proof.
+
+We will now explain how to use definitions.
 
 ### Example
+
+Here's, as an example, the definition of the square function.
 ```coq
 Definition square (x : ℝ) := x^2.
 ```
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Waterproof Register Expand "square";
+  for square;
+  as "Definition square".
+```
+</hint>
+
+By writing `Expand square.` you get suggestions on how to use the definition of _square_ in your proof.
+Alternatively, you can just write `Expand All.` and you get suggestions for all definitions that
+Waterproof knows about.
+
+After writing one of these, you can click on the button `replace` to replace the line
+`Expand square.` or `Expand All.` with one of the suggested statements.
 
 ```coq
 Lemma example_expand :
   ∀ x ∈ ℝ, square x ≥ 0.
 Proof.
 Take x ∈ (ℝ).
-Expand the definition of square.
+Expand square.
   (* Remove the above line in your own code! *)
-We need to show that (x^2 ≥ 0).
-We conclude that (x^2 ≥ 0).
+Expand All.
+  (* Remove the above line in your own code! *)
+We need to show that x^2 ≥ 0.
+We conclude that x^2 ≥ 0.
 Qed.
 ```
 ### Try it yourself

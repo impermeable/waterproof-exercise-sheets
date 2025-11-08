@@ -28,6 +28,8 @@ Inductive answer : Type :=
 ```
 </hint>Declaration of metric space $(X,\mathrm{dist})$ used in both exercises:
 ```coq
+Section Prop_5_4_1.
+
 Context (X : Metric_Space).
 Notation "'dist(' x , y )" := (dist X x y)
   (format "'dist(' x ,  y ')'").
@@ -42,10 +44,6 @@ To write $n ≥ N_1$ for natural numbers $n, N_1$, you need to write
 Similarly, if you need to pick a natural number $N_1$, use  ```Choose N1 := (..)%nat```.
 
 ⚠️ The variable names `N` and `N0` are already used in the code that defines the real numbers. You cannot use these names any more. Instead use a name like `N1`.
-```coq
-Section Prop_5_4_1.
-```
-
 ```coq
 Variable (p : X).
 Definition a (n : ℕ) := p.
@@ -75,6 +73,10 @@ It holds that (& dist(a(n), p) = dist(a((n-k) + k)%nat, p) = dist(a_shift(n - k)
 (Note that the above line only holds in a particular place in the proof, given certain choices made earlier).</hint>
 ```coq
 Section Prop_5_8_1.
+
+Context (X : Metric_Space).
+Notation "'dist(' x , y )" := (dist X x y)
+  (format "'dist(' x ,  y ')'").
 
 Variables (a : ℕ → X) (k : ℕ) (p : X).
 
