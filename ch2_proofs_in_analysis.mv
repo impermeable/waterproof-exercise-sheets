@@ -1,7 +1,8 @@
 # Proofs in analysis<hint title="📦 Import libraries (click to open/close)">
 ```coq
-Require Import Coq.Reals.Reals.
-Require Import Qreals.
+Require Import Stdlib.Reals.Reals.
+From Stdlib Require Import Qreals.
+From Stdlib Require Import String.
 
 Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
@@ -28,9 +29,9 @@ Local Hint Resolve Rplus_gt_compat : wp_reals.
 Inductive answer : Type :=
 | Yes : answer.
 ```
-</hint>## Exercise 3.11.1
+</hint>## Exercise 2.11.1
 ```coq
-Lemma exercise_3_11_1 :
+Lemma exercise_2_11_1 :
   ∃ M ∈ ℝ,
     ∀ x ∈ [0, 5], (x ≤ M).
 Proof.
@@ -43,9 +44,34 @@ Proof.
 ```coq
 Qed.
 ```
-## Exercise 3.11.2
+
+### Reflection
+
+<hint title="🔧 Technical details">
 ```coq
-Lemma exercise_3_11_2 :
+Open Scope string_scope.
+Definition reflection_answer_1 : string. exact
+```
+</hint>
+
+Which common proof steps from the best practices / tutorial did you use here?
+
+Provide your answer surrounded by double quotes  followed by a period (" ... ".).
+
+<input-area>
+```coq
+
+```
+</input-area>
+<hint title="🔧 Technical details">
+```coq
+Qed. Close Scope string_scope.
+```
+</hint>
+
+## Exercise 2.11.2
+```coq
+Lemma exercise_2_11_2 :
   ∀ x ∈ ℝ,
     ∃ y ∈ ℝ,
       ∀ u > 0,
@@ -60,9 +86,34 @@ Proof.
 ```coq
 Qed.
 ```
-## Exercise 3.11.4
+
+### Reflection
+
+<hint title="🔧 Technical details">
 ```coq
-Section Exercise_3_11_4.
+Open Scope string_scope.
+Definition reflection_answer_2 : string. exact
+```
+</hint>
+
+Which common proof steps from the best practices / tutorial did you use here?
+
+Provide your answer surrounded by double quotes  followed by a period (" ... ".).
+
+<input-area>
+```coq
+
+```
+</input-area>
+<hint title="🔧 Technical details">
+```coq
+Qed. Close Scope string_scope.
+```
+</hint>
+
+## Exercise 2.11.4
+```coq
+Section Exercise_2_11_4.
 
 Variable f : ℝ → ℝ.
 Variable g : ℝ → ℝ.
@@ -81,6 +132,31 @@ Proof.
 ```coq
 Qed.
 ```
+### Reflection
+
+<hint title="🔧 Technical details">
+```coq
+Open Scope string_scope.
+Definition reflection_answer_3 : string. exact
+```
+</hint>
+
+Which common proof steps from the best practices / tutorial did you use here?
+
+Provide your answer surrounded by double quotes  followed by a period (" ... ".).
+
+<input-area>
+```coq
+
+```
+</input-area>
+<hint title="🔧 Technical details">
+```coq
+Qed. Close Scope string_scope.
+End Exercise_2_11_4.
+```
+</hint>
+
 ## Declaration of own work
 
 Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
