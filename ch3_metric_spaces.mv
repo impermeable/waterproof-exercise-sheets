@@ -8,7 +8,8 @@ Require Import Waterproof.Notations.Reals.
 Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Chains.
 Require Import Waterproof.Automation.
-Locate Functions.injective.
+
+From Stdlib Require Import String.
 
 Require Import Waterproof.Libs.Analysis.MetricSpaces.
 
@@ -23,25 +24,61 @@ Notation "'min(' x , y )" := (Rmin x y)
 
 Inductive answer : Type :=
 | Yes : answer.
+
+Set Bullet Behavior "Waterproof Relaxed Subproofs".
 ```
 </hint>#### **Before we start, some remarks regarding syntax.**
 
 The formulation of the proof steps available in Waterproof is quite strict. You can always consult the tutorial to revisit these formulations.
 You can also click the water drop on the left and click on the "Tactics" button and a list with possible tactics will show up.
 
-## Exercise 2.7.1
+## Exercise 3.7.1
 ```coq
-Section Exercise_2_7_1.
+Section Exercise_3_7_1.
 
 Variable (Y : Metric_Space) (X : Set) (f : X → Y).
-Hypothesis f_is_injective : injective _ _ f.
+Parameter f_injective : injective _ _ f.
+Notation "'injectivity' 'of' 'f'" := f_injective.
 
-Notation "'dist_Y(' x , z )" := (dist Y x z) (format "'dist_Y(' x ,  z ')'").
+Notation "'dist_Y' '(' x , z )" := (dist Y x z) (format "'dist_Y' '(' x ,  z ')'").
 
 Variable d : X -> X -> ℝ.
-Hypothesis definition_d :
+Parameter definition_d :
   ∀ x ∈ X, ∀ z ∈ X, d(x, z) = dist_Y(f(x), f(z)).
 ```
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Notation "'the' 'definition' 'of' 'd'" := "definition_d"%string.
+
+Create HintDb definition_d.
+Hint Extern 0 => rewrite definition_d : definition_d.
+Hint Extern 1 => rewrite <- definition_d : definition_d.
+
+Definition dist_positive_Y :
+  ∀ a ∈ Y, ∀ b ∈ Y, dist_Y(a, b) ≥ 0 := dist_positive Y.
+Notation "'positivity' 'of' 'dist_Y'" := dist_positive_Y.
+
+Definition dist_non_degenerate_Y :
+  ∀ a ∈ Y, ∀ b ∈ Y, dist_Y(a, b) = 0 ⇒ a = b := dist_non_degenerate Y.
+Notation "'non-degeneracy' 'of' 'dist_Y'" := dist_non_degenerate_Y.
+
+Definition dist_symmetric_Y :
+  ∀ a ∈ Y, ∀ b ∈ Y, dist_Y(a, b) = dist_Y(b, a) := dist_symmetric Y.
+Notation "'symmetry' 'of' 'dist_Y'" := dist_symmetric_Y.
+
+Definition dist_triangle_inequality_Y :
+  ∀ a ∈ Y, ∀ b ∈ Y, ∀ c ∈ Y,
+    dist_Y(a, c) ≤ dist_Y(a, b) + dist_Y(b, c) :=
+  dist_triangle_inequality Y.
+
+Notation "'the' 'triangle' 'inequality' 'for' 'dist_Y'" :=
+  dist_triangle_inequality_Y.
+
+Definition dist_reflexive_Y :
+  ∀ a ∈ Y, dist_Y(a, a) = 0 := dist_reflexive Y.
+Notation "'reflexivity' 'of' 'dist_Y'" := dist_reflexive_Y.
+```
+</hint>
 The above basically says: Let $(Y, \mathsf{dist}_Y)$ be a metric space, let $X$ is a set, and assume $f : X \rightarrow Y$ is injective.
 
 Let the function $d : X \times X \rightarrow \mathbb{R}$ satisfy that for all $x, z \in X$,
@@ -50,19 +87,34 @@ d(x, z) := \mathsf{dist}_Y(f(x), f(z)).
 $$
 In this exercise we would like to check that $d$ is a distance on $X$, by checking the five properties of a distance. Because $\text{dist}_Y$ is a distance, it satisfies those five properties which define the concept of *distance*:
 ```coq
-Check (dist_positive Y).
-Check (dist_non_degenerate Y).
-Check (dist_symmetric Y).
-Check (dist_triangle_inequality Y).
-Check (dist_reflexive Y).
+Check positivity of dist_Y.
+Check non-degeneracy of dist_Y.
+Check symmetry of dist_Y.
+Check the triangle inequality for dist_Y.
+Check reflexivity of dist_Y.
 ```
-<hint title="💡 Hint (click to open/close)">If you want to use a lemma that was already proven, you could write
+You can use any of these facts in a construction like
+```
+By positivity of dist_Y it holds that ...
+```
+If you want to use the injectivity of `f`, you can refer to it by
+```
+injectivity of f
+```
+If you want to use the definition of `d`, you can refer to it by
+```
+the definition of d
+```<hint title="💡 Hint (click to open/close)">You can even use multiple reasons in one line, by writing
 
-`By (`*name of lemma*`) it holds that (`*what you want to show with that lemma*`) (`*optional label of hypothesis*`).`
+```
+By reason 1 and reason 2 it holds that ...
+```
+or
+```
+By reason 1, reason 2, ..., reason n-1 and reason n it holds that ...
+```
 
-For instance, in this first lemma, it might be a good idea to use
-
-`(dist_positive Y)`.
+Note that the syntax is quite strict, and you cannot just use this for any reasons, but you can use this for the reasons mentioned above.
 
 Good luck!</hint><hint title="💡 Hint (click to open/close)">Recall from the `tutorial` that to write a chain of (in)equalities you can use the following syntax
 
@@ -137,11 +189,11 @@ Qed.
 ```
 
 ```coq
-End Exercise_2_7_1.
+End Exercise_3_7_1.
 ```
-## Exercise 2.7.3
+## Exercise 3.7.3
 ```coq
-Module Exercise_2_7_3.
+Module Exercise_3_7_3.
 ```
 Consider the function $d : \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ defined by
 $$
@@ -173,7 +225,11 @@ Proof.
 ```coq
 Qed.
 ```
-
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Notation "'positivity' 'of' 'd'" := d_positive.
+```
+</hint>
 ```coq
 Lemma d_non_degenerate :
   ∀ a ∈ ℝ, ∀ b ∈ ℝ, (d(a, b) = 0) ⇒ (a = b).
@@ -187,7 +243,11 @@ Proof.
 ```coq
 Qed.
 ```
-
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Notation "'non-degeneracy' 'of' 'd'" := d_non_degenerate.
+```
+</hint>
 ```coq
 Lemma d_symmetric : ∀ a ∈ ℝ, ∀ b ∈ ℝ, d(a, b) = d(b, a).
 Proof.
@@ -200,6 +260,11 @@ Proof.
 ```coq
 Qed.
 ```
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Notation "'symmetry' 'of' 'd'" := d_symmetric.
+```
+</hint>
 <hint title="💡 Hint (click to open/close)">
 If you know that $a = b$ and $b = c$, what do you know about the relation between $a$ and $c$?
 What do you know for the case when $a \neq b$ and $b = c$ or when $a = b$ and $b \neq c$?
@@ -217,7 +282,11 @@ Proof.
 ```coq
 Qed.
 ```
-
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Notation "'the' 'triangle' 'inequality' 'for' 'd'" := d_triangle_inequality.
+```
+</hint>
 ```coq
 Lemma d_reflexive : ∀ a ∈ ℝ, d(a, a) = 0.
 Proof.
@@ -230,9 +299,13 @@ Proof.
 ```coq
 Qed.
 ```
-
+<hint title="🔧 Technical details (click to open/close)">
 ```coq
-End Exercise_2_7_3.
+Notation "'reflexivity' 'of' 'd'" := d_reflexive.
+```
+</hint>
+```coq
+End Exercise_3_7_3.
 ```
 ## Declaration of own work
 
