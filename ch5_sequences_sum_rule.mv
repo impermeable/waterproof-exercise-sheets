@@ -1,0 +1,106 @@
+# Limit law for the sum of two sequences
+<hint title="📦 Import libraries (click to open/close)">
+```coq
+Set Default Goal Selector "!".
+
+Require Import Coq.Reals.Reals.
+Require Import Waterproof.Tactics.
+Require Import Waterproof.Notations.Common.
+Require Import Waterproof.Notations.Reals.
+Require Import Waterproof.Notations.Sets.
+Require Import Waterproof.Chains.
+Require Import Waterproof.Automation.
+Require Import Waterproof.Libs.Analysis.Sequences.
+
+Require Import Waterproof.Libs.Reals.
+
+Waterproof Enable Automation RealsAndIntegers.
+Waterproof Enable Automation Intuition.
+
+Open Scope R_scope.
+Open Scope subset_scope.
+
+Hint Extern 0 => progress (unfold R_dist in *) : wp_reals.
+
+Notation "'max' ( x , y )" := (Nat.max x y)
+  (format "'max' '(' x ,  y ')'")  : nat_scope.
+Notation "'min' ( x , y )" := (Nat.min x y)
+  (format "'min' '(' x ,  y ')'") : nat_scope.
+
+Notation "'max' ( x , y )" := (Rmax x y)
+  (format "'max' '(' x ,  y ')'")  : R_scope.
+Notation "'min' ( x , y )" := (Rmin x y)
+  (format "'min' '(' x ,  y ')'") : R_scope.
+
+Waterproof Register Expand "⟶";
+  for converges_to;
+  as "Definition of convergence".
+
+Inductive answer : Type :=
+| Yes : answer.
+
+Notation "'the' 'triangle' 'inequality'" := Rabs_triang.
+
+Set Bullet Behavior "Waterproof Relaxed Subproofs".
+```
+</hint>
+## Exercise 5.9.3
+
+This is Exercise 5.9.3 in the notes, except that it is formulated for $\mathbb{R}$ instead of for an arbitrary normed vector space.
+
+```coq
+Section Exercise_5_9_3.
+
+Variable a : ℕ → ℝ.
+Variable b : ℕ → ℝ.
+Variable p : ℝ.
+Variable q : ℝ.
+
+Definition c (n : ℕ) := a(n) + b(n).
+```
+The above says: let $a : \mathbb{N} \to \mathbb{R}$ and
+$b : \mathbb{N} \to \mathbb{R}$ be sequences, and let $p, q \in \mathbb{R}$.
+Define the sequence $c : \mathbb{N} \to \mathbb{R}$ by
+$$c(n) = a(n) + b(n) $$The lemma below now basically states if $a$ converges to $p$ and $b$ converges to $q$, then $c$ converges to $p + q$.
+
+## Before you start, here are a few points of attention:
+
+⚠️ When Waterproof remains stuck on "verified on line 80", it means that the step that's being taken around line 80 is too large for Waterproof to verify. It tries but cannot find the reason. You then need to provide more information, or make a smaller step.
+
+⚠️ Avoid using `N` and `N0` as variable names. Using these names usually gives problems later.
+
+⚠️ When choosing a natural number, such as `N1`, it will most likely be necessary to use the `%nat` notation, as in `N1 := (...)%nat` .
+
+⚠️ Also in Waterproof, it can be useful to rename certain dummy variables in statements (for instance replacing `ε` by `ε1` in a statement of the form `∀ ε1 > 0, ...`.
+
+```coq
+Lemma exercise_5_9_3 :
+  a ⟶ p ⇒ (
+    b ⟶ q
+       ⇒ c ⟶ (p + q)).
+Proof.
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+
+End Exercise_5_9_3.
+```
+## Declaration of own work
+
+Please declare that the work above is your own work, by writing `Yes.` as an answer on the line below. In particular, this means that the proofs above are typed by yourself, and that you could give an explanation of the proof when asked.
+```coq
+Definition own_work : answer. exact
+```
+<input-area>
+```coq
+
+```
+</input-area>
+```coq
+Qed.
+```
