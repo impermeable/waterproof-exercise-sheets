@@ -3,7 +3,7 @@
 ```coq
 Set Default Goal Selector "!".
 
-Require Import Coq.Reals.Reals.
+Require Import Stdlib.Reals.Reals.
 Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
 Require Import Waterproof.Notations.Reals.
