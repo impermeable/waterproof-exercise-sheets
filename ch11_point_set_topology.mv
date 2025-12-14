@@ -2,14 +2,23 @@
 ```coq
 Set Default Goal Selector "!".
 
-Require Import Coq.Reals.Reals.
+Require Import Stdlib.Logic.FunctionalExtensionality.
+Require Import Stdlib.Reals.Reals.
+Require Import Stdlib.Logic.ClassicalChoice.
+Require Import Stdlib.Logic.PropExtensionality.
 Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
 Require Import Waterproof.Notations.Reals.
 Require Import Waterproof.Notations.Sets.
 Require Import Waterproof.Chains.
+Require Import Waterproof.Libs.Analysis.Sequences.
 Require Import Waterproof.Libs.Analysis.OpenAndClosed.
+
 Require Import Waterproof.Automation.
+
+From Waterproof Require Import Negation.
+From Waterproof Require Import ArchimedN.
+
 
 Waterproof Enable Automation RealsAndIntegers.
 Waterproof Enable Automation Intuition.
@@ -22,10 +31,206 @@ Notation "'max(' x , y )" := (Rmax x y)
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
 
+Lemma seq_char (A : subset R) : 
+  ((∀ q ∈ ℝ, ∀ z : ℕ → ℝ,
+    (∀ n ∈ ℕ, z(n) ∈ A) ⇒
+      z ⟶ q ⇒ q ∈ A)) ⇔ A is closed.
+Proof.
+split.
+- Assume that (∀ q ∈ ℝ, ∀ z : ℕ → ℝ, (∀ n ∈ ℕ, z(n) ∈ A) ⇒ z ⟶ q ⇒ q ∈ A) as (i).
+  We need to show that ∀ a ∈ ℝ\A, ∃ r > 0, ∀ x ∈ B(a, r), x ∈ ℝ\A.
+  Take a ∈ ℝ\A.
+  We argue by contradiction.
+  Assume that ¬ (∃ r > 0, ∀ x ∈ B(a, r), x ∈ ℝ\A).
+  It holds that ∀ r > 0, ∃ x ∈ B(a, r), ¬ (x ∈ ℝ\A).
+  We claim that ∀ n : ℕ, ∃ x : ℝ, x ∈ B(a, Rinv (n+1)) ∧ x ∈ A as (iii).
+  {
+    Take n : ℕ.
+    It holds that (1 / (n+1)) > 0.
+    It holds that ∃ x1 ∈ B(a, Rinv (n + 1)), ¬ (x1 ∈ ℝ \ A).
+    Obtain such x1.
+    Choose x := x1.
+    We show both statements.
+    - We conclude that x ∈ B(a, Rinv (n+1)).
+    - We conclude that x ∈ A.    
+  }
+  We claim that ∃ z : ℕ → ℝ, ∀ n : ℕ, z(n) ∈ B(a, Rinv (n+1)) ∧ z(n) ∈ A as (iv).
+  {
+    exact (@choice ℕ ℝ (fun n y => y ∈ B(a, Rinv (n+1)) ∧ y ∈ A) iii).
+  }
+  Obtain such a z.
+  We claim that z ⟶ a.
+  {
+    intros ε v.
+    By the Archimedean property it holds that ∃ N2 ∈ ℕ, N2 > 1 / ε.
+    Obtain such an N2.
+    Choose N1 := N2.
+    { Indeed, N1 ∈ ℕ. }
+    We need to show that ∀ n ≥ N1, ｜z(n) - a｜ < ε.
+    Take n ≥ N1.
+    It holds that z(n) ∈ B(a, Rinv (n+1)) ∧ z(n) ∈ A.
+    It holds that z(n) ∈ B(a, Rinv (n+1)).
+    It holds that | z(n) - a | < Rinv (n + 1).
+    It holds that n ≥ N1.
+    It holds that Rinv ε > 0.
+    It holds that 1 / ε > 0.
+    It holds that & n ≥ N1 = N2 > 1 / ε = Rinv ε.
+    It holds that n > 0.
+    By Rinv_lt_contravar it holds that & Rinv (n+1) < Rinv n < Rinv (Rinv ε) = ε.
+    We conclude that & R_dist (z(n), a) = | z(n) - a | < ε.
+  }
+  We claim that ∀ n ∈ ℕ, z(n) ∈ A.
+  {
+    Take n ∈ ℕ.
+    It holds that z(n) ∈ B(a, / (n + 1)) ∧ z(n) ∈ A.
+    We conclude that z(n) ∈ A.
+  }
+  Use q := a, z0 := z in (i).
+  { Indeed, a ∈ ℝ. }
+  It holds that (∀ n ∈ ℕ, z(n) ∈ A) ⇨ z ⟶ a ⇨ a ∈ A.
+  It holds that a ∈ A.
+  Contradiction.
+- Assume that A is closed as (i).
+  Take q ∈ ℝ.
+  Take z : ℕ → ℝ.
+  Assume that (∀ n ∈ ℕ, z(n) ∈ A).
+  Assume that z ⟶ q.
+  It holds that ∀ a ∈ ℝ\A, ∃ r > 0, ∀ x ∈ B(a, r), x ∈ ℝ\A as (ii).
+  We argue by contradiction.
+  Assume that ¬ q ∈ A.
+  It holds that q ∈ ℝ\A.
+  It holds that ∃ r > 0, ∀ x ∈ B(q, r), x ∈ ℝ\A.
+  Obtain such an r.
+  It holds that ∃ N1 ∈ ℕ, ∀ n ≥ N1, R_dist(z(n) , q) < r.
+  Obtain such an N1.
+  It holds that R_dist(z(N1), q) < r.
+  It holds that |z(N1) - q| < r.
+  It holds that z(N1) ∈ A.
+  It holds that z(N1) ∈ B(q, r).
+  It holds that z(N1) ∈ ℝ\A.
+  Contradiction.
+Qed.
+  
+Waterproof Register Expand "closed";
+  for is_closed;
+  as "Sequence characterization of closedness";
+  by rewrite (fun A => propositional_extensionality _ _ (seq_char A)).
+Hint Extern 1 => setoid_rewrite (fun A => propositional_extensionality _ _ (seq_char A)) : wp_core.
+
+Lemma double_complement (A : subset ℝ) : ℝ \ (ℝ\A) = A.
+Proof.
+  apply functional_extensionality.
+  intro x.
+  apply propositional_extensionality.
+  split.
+  - Assume that x ∈ ℝ\(ℝ\A).
+    It holds that ¬ x ∈ ℝ \ A.
+    It suffices to show that x ∈ A.
+    We conclude that x ∈ A.
+  - Assume that x ∈ A.
+    We need to show that ¬ x ∈ ℝ \ A.
+    We conclude that ¬ x ∈ ℝ \ A.
+Qed.
+
+Lemma alt_char_open (A : subset ℝ) : ℝ\A is closed ⇔ A is open.
+Proof.
+split.
+- Assume that ℝ\A is closed.
+  It holds that (ℝ\(ℝ \ A) is open).
+  By double_complement it holds that A = ℝ\(ℝ \ A) as (i).
+  It suffices to show that ℝ\(ℝ \ A) is open.
+  We conclude that ℝ\(ℝ \ A) is open.
+- Assume that A is open.
+  We need to show that ℝ\(ℝ \ A) is open.
+  By double_complement it holds that ℝ\(ℝ \ A) = A as (i).
+  It suffices to show that A is open.
+  We conclude that A is open.
+Qed.
+
+Waterproof Register Expand "open";
+  for is_open;
+  as "Alternative characterization open";
+  by apply alt_char_open.
+
+Hint Resolve alt_char_open | 2 : wp_core.
+Hint Resolve <- alt_char_open : wp_core.
+
+Waterproof Register Expand "closed";
+  for is_closed;
+  as "Sequence characterization of closedness";
+  by apply seq_char.
+
+Hint Resolve seq_char | 2 : wp_core.
+Hint Resolve <- seq_char : wp_core.
+Hint Extern 1 => ltac2:(solve_by_manipulating_negation (fun () => ())) : wp_reals.
+
 Inductive answer : Type :=
 | Yes : answer.
+
+Set Bullet Behavior "Waterproof Relaxed Subproofs".
 ```
-</hint><hint title="💡 Hint (click to open/close)">Recall that `x : B(p,r)` is equivalent to `|x - p| < r` .
+</hint>
+In the proofs below, you can use the definition of open and closed sets, or you can use the sequence characterization of closedness. Both are available through the `Expand All.` command.
+
+Recall that $x \in B(p, r)$ if and only if $|x - p| < r$.
+
+If you use the sequence characterization of closedness, it will be very useful to use the sequences below. You can use without proof that for all $n \in \mathbb{N}$, $a_n \notin [0, 1)$ and $b_n \in [0, 1)$, and that $a$ converges to $0$ and $b$ converges to $1$.
+```coq
+Definition a (n : ℕ) := - (1 / (n + 1)).
+Definition b (n : ℕ) := 1 - (1 / (n + 1)).
+```
+<hint title="🔧 Technical details (click to open/close)">
+```coq
+Lemma a_converges_to_0 : a ⟶ 0.
+Proof.
+By min_1_over_n_plus_1_to_0 we conclude that (converges_to a 0).
+Qed.
+
+Lemma b_converges_to_1 : b ⟶ 1.
+Proof.
+It holds that 1 = 1 + 0.
+It suffices to show that b ⟶ (1 + 0).
+It suffices to show that (fun n => (constant_sequence 1)(n) + a(n)) ⟶ (1 + 0).
+By lim_const_seq, a_converges_to_0 and convergence_plus we conclude that
+  ((fun n => (constant_sequence 1)(n) + a(n)) ⟶ (1 + 0)) as (i).
+Qed.
+
+Lemma a_neg (n : ℕ) : a(n) < 0.
+Proof.
+It holds that (n + 1) > 0.
+It holds that / (n + 1) > 0.
+We conclude that & a(n) = - (1 / (n + 1)) = - / (n + 1) < 0.
+Qed.
+
+Lemma a_notin_interv (n : ℕ) : a(n) ∈ ℝ\[0, 1).
+Proof.
+We need to show that ¬ a(n) ∈ [0, 1).
+It suffices to show that a(n) < 0.
+By a_neg we conclude that a(n) < 0.
+Qed.
+
+Lemma b_in_interv (n : ℕ) : b(n) ∈ [0, 1).
+Proof.
+We need to show that 0 <= b(n) < 1.
+It holds that n ≥ 0.
+It holds that (n + 1) ≥ 1.
+By Rinv_le_contravar it holds that
+    & 1 / (n + 1) = / (n + 1) ≤ / 1 = 1.
+It holds that / (n + 1) > 0.
+We show both statements.
+- We need to show that 0 ≤ 1 - (1/(n+1)).  
+  We conclude that 0 ≤ 1 - (1/(n+1)).
+- We need to show that 1 - (1/(n+1)) < 1.
+  By a_neg it holds that - (1/(n+1)) < 0.
+  We conclude that 1 - (1/(n+1)) < 1.  
+Qed.
+
+Hint Resolve a_converges_to_0 : wp_reals.
+Hint Resolve b_converges_to_1 : wp_reals.
+Hint Resolve a_neg : wp_reals.
+Hint Resolve a_notin_interv : wp_reals.
+Hint Resolve b_in_interv : wp_reals.
+```
 </hint>
 ## Exercise: prove that the interval $[0, 1)$ is not open
 ```coq
