@@ -2,8 +2,8 @@
 ```coq
 Set Default Goal Selector "!".
 
-Require Import Rbase.
-Require Import Rbasic_fun.
+From Stdlib Require Import Rbase.
+From Stdlib Require Import Rbasic_fun.
 
 Require Import Waterproof.Tactics.
 Require Import Waterproof.Notations.Common.
@@ -24,20 +24,22 @@ Notation "'max(' x , y )" := (Rmax x y)
 Notation "'min(' x , y )" := (Rmin x y)
   (format "'min(' x ,  y ')'").
 
+Waterproof Register Expand "continuous";
+  for is_continuous_in;
+  as "ε-δ characterization continuity in a point";
+  by apply alt_char_continuity.
+
 Inductive answer : Type :=
 | Yes : answer.
 ```
 </hint>## Exercise 13.11.2
 ```coq
-Definition f (x : ℝ) := x.
+Definition f (x : ℝ) := 2 * x.
 
 Lemma exercise_13_11_2 : ∀ a ∈ ℝ, f is _continuous_ in a.
 Proof.
 ```
-<hint title="💡 Hint (click to open/close)">To use the *$\varepsilon - \delta$ characterization* of continutiy in a point `a ∈ ℝ` , write
-
-`It suffices to show that
-  ∀ ε > 0, ∃ δ > 0, ∀ x ∈ ℝ, 0 < |x - a| < δ ⇒ |x - a| < ε.`</hint><input-area>
+<hint title="💡 Hint (click to open/close)">To see how to use the *$\varepsilon - \delta$ characterization* of continutiy in a point `a ∈ ℝ` , you can write `Expand All`.</hint><input-area>
 ```coq
 
 ```
